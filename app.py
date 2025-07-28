@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 import os
@@ -10,6 +11,15 @@ genai.configure(api_key="AIzaSyAySapw7eA-rQU4Q2j4gJngJRI45RiCslQ")  # Replace wi
 
 # ✅ Initialize FastAPI app
 app = FastAPI()
+
+# ✅ Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # React dev server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ✅ Load schema text
 SCHEMA_TEXT = db_schema.strip()
